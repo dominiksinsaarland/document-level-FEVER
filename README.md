@@ -52,10 +52,10 @@ python src/main.py --do_predict --model_name sentence-selection-bigbird-base --e
 ```
 
 ## The pipeline
-* takes a first pass over all (claim, Wikipage) pairs where Wikipages are predicted by [(Hanselowski et al., 2018)](https://github.com/UKPLab/fever-2018-team-athene) and the [FEVER baseline](https://github.com/awslabs/fever)
-* extracts all sentences it is confident that they are evidence in that pass
+* takes a first pass over all (claim, WikiPage) pairs where Wikipages are predicted by [(Hanselowski et al., 2018)](https://github.com/UKPLab/fever-2018-team-athene) and the [FEVER baseline](https://github.com/awslabs/fever)
+* extracts all sentences it is confident that they are evidence in that pass, model_input is [CLS] claim [SEP] WikiPage [SEP]
 * retrieves *conditioned evidence* as explained in [(Stammbach and Neumann, 2019)](https://aclanthology.org/D19-6616/)
-* retrieves hyperlinks and takes a second pass over all (claim, hyperlink) pairs where model_input is [CLS] claim, evidence_sentence [SEP] Hyperlink_Page]
+* retrieves hyperlinks from evidence_sentences and takes a second pass over all (claim, hyperlink) pairs where model_input is [CLS] claim, evidence_sentence [SEP] HyperlinkPage [SEP]
 * sorts all predicted evidence sentences for a claim in descending order
 * takes the five highest scoring sentences for each claim and concatenates those
 * predicts a label for each (claim, retrieved_evidence) pair using the RTE model (trained with an outdated huggingface sequence classification demo script)
