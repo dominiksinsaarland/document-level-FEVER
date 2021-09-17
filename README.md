@@ -26,7 +26,7 @@ The models (pytorch models) can be downloaded here:
 python src/main.py --do_predict --model_name sentence-selection-bigbird-base --eval_file sample_data.jsonl --predict_filename predictions_sentence_retrieval.csv
 ```
 
-(to train the models, just add --do_train)
+
 
 sample_data.jsonl points to a file where each line is an example of a (claim, Wiki-page) pair
 * id # the claim ID
@@ -46,9 +46,9 @@ output is a dataframe where we store for each sentence predicted by the model
 
 ## re-train the models
 
-point to train_file and eval_file, both in the format described above
+point to train_file and eval_file, both in the format described above, and add do_train flag
 ```shell
-python src/main.py --do_predict --model_name sentence-selection-bigbird-base --eval_file sample_data.jsonl --train_file sample_data.jsonl --predict_filename predictions_sentence_retrieval.csv
+python src/main.py --do_train --do_predict --model_name sentence-selection-bigbird-base --eval_file sample_data.jsonl --train_file sample_data.jsonl --predict_filename predictions_sentence_retrieval.csv
 ```
 
 ## The pipeline
