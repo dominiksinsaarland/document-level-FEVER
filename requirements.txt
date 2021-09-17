@@ -1,0 +1,4 @@
+git+https://github.com/huggingface/transformers
+sentencepiece
+sklearn
+pandas
