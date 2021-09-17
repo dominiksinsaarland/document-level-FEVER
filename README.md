@@ -22,9 +22,43 @@ The models (pytorch models) can be downloaded here:
 
 ## Run the models on sample data
 
+```shell
+python src/main.py --do_predict --model_name sentence-selection-bigbird-base --eval_file sample_data.jsonl --predict_filename predictions_sentence_retrieval.csv
+```
+
+(to train the models, just add --do_train)
+
+sample_data.jsonl points to a file where each line is an example of a (claim, Wiki-page) pair
+* id # the claim ID
+* claim # the claim
+* page # the page title
+* sentences # a list -- essentally the "lines" in the official FEVER wiki-pages for a given document (where the document is split by "\n")
+* label_list # a list, 1 if a sentence is part of any annotated evidence set for a given claim, 0 otherwise
+* sentence_IDS # a list, np.arange(len(sentences))
+
+output is a dataframe where we store for each sentence predicted by the model
+* claim_id
+* page_sentence # a tuple (Wikipage_Title, sentence_ID), for example ('2014_San_Francisco_49ers_season', 3)
+* y # 1 if label_list above was 1, 0 otherwise
+* predictions # token-level predictions for this sentence
+* score # np.mean(predictions), model is confident that this sentence is evidence if score > 0
 
 
 ## re-train the models
+
+point to train_file and eval_file, both in the format described above
+```shell
+python src/main.py --do_predict --model_name sentence-selection-bigbird-base --eval_file sample_data.jsonl --train_file sample_data.jsonl --predict_filename predictions_sentence_retrieval.csv
+```
+
+## The pipeline
+* takes a first pass over all (claim, Wikipage) pairs where Wikipages are predicted by [(Hanselowski et al., 2018)](https://github.com/UKPLab/fever-2018-team-athene) and the [FEVER baseline](https://github.com/awslabs/fever)
+* extracts all sentences it is confident that they are evidence in that pass
+* retrieves *conditioned evidence* as explained in [(Stammbach and Neumann, 2019)](https://aclanthology.org/D19-6616/)
+* retrieves hyperlinks and takes a second pass over all (claim, hyperlink) pairs where model_input is [CLS] claim, evidence_sentence [SEP] Hyperlink_Page]
+* sorts all predicted evidence sentences for a claim in descending order
+* takes the five highest scoring sentences for each claim and concatenates those
+* predicts a label for each (claim, retrieved_evidence) pair using the RTE model (trained with an outdated huggingface sequence classification demo script)
 
 ## questions
 
