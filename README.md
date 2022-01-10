@@ -16,8 +16,9 @@ pip install -r requirements.txt
 ## Models
 
 The models (pytorch models) can be downloaded here:
-* [sentence-selection-bigbird-base](https://www.dropbox.com/s/931bm5bveou1zn6/sentence-selection-bigbird-large.zip?dl=0)
-* [sentence-selection-bigbird-large](https://www.dropbox.com/s/ui19gcjcuxfstrg/sentence-selection-bigbird-base.zip?dl=0)
+* [sentence-selection-bigbird-base](https://www.dropbox.com/s/ui19gcjcuxfstrg/sentence-selection-bigbird-base.zip?dl=0)
+* [sentence-selection-bigbird-large](https://www.dropbox.com/s/931bm5bveou1zn6/sentence-selection-bigbird-large.zip?dl=0)
+
 * [RTE-debertav2-MNLI](https://www.dropbox.com/s/6aoi0nac2e45csi/RTE-model.zip?dl=0)
 
 ## Run the models on sample data
