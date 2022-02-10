@@ -1,6 +1,6 @@
 # Evidence Selection as a Token-Level Prediction Task
 
-This repo contains the code and models for the paper [(Stammbach, 2021)](https://fever.ai/workshop.html)
+This repo contains the code and models for the paper [(Stammbach, 2021)](https://aclanthology.org/2021.fever-1.2.pdf)
 
 ## Installation
 
