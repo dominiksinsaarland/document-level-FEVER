@@ -61,6 +61,23 @@ python src/main.py --do_train --do_predict --model_name sentence-selection-bigbi
 * takes the five highest scoring sentences for each claim and concatenates those
 * predicts a label for each (claim, retrieved_evidence) pair using the RTE model (trained with an outdated huggingface sequence classification demo script)
 
+## MultiHop
+
+For generating the multihop dataset, we need to download the fever.db, see how to obtain this [here](https://github.com/sheffieldnlp/naacl2018-fever/blob/master/scripts/download-processed-wiki.sh)
+
+After having predicted a first pass, we can retrieve multihop pages by running
+
+```shell
+python src/retrieve_multihop_evidence.py --db_file fever.db --predictions predictions_sentence_retrieval.csv --fever_data dev.jsonl --outfile_name multi_evidence_sample_data.jsonl
+```
+
+Afterwards, we can predict these sentences the same way as before
+
+```shell
+python src/main.py --do_predict --model_name sentence-selection-bigbird-base --eval_file multi_evidence_sample_data.jsonl --predict_filename predictions_multihop_sentence_retrieval.csv
+```
+
+
 ## questions
 
 If anything should not work or is unclear, please don't hesitate to contact the authors

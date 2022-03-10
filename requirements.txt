@@ -3,3 +3,4 @@ sentencepiece
 sklearn
 pandas
 tqdm
+pysqlite3 
