@@ -110,7 +110,7 @@ if __name__ == "__main__":
 	parser.add_argument("--db_file", default="fever.db", type=str, help="path to fever db")
 	parser.add_argument("--predictions", default="predictions_sentence_retrieval_sample.csv", type=str, help="path to output file of predicting evidence in a first pass")
 	parser.add_argument("--fever_data", default="../fever-transformers/data/fever/dataset/dev.jsonl", type=str, help="path to train/dev/test split of FEVER data")
-	parser.add_argument("--outfile_name", default="multi_evidence_sample_data.jsonl", type=str, "outfile name for the multihop prediction pass")
+	parser.add_argument("--outfile_name", default="multihop_evidence_sample_data.jsonl", type=str, "outfile name for the multihop prediction pass")
 
 	args = parser.parse_args()
 
