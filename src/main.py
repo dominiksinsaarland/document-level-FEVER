@@ -1,4 +1,4 @@
-from transformers import BigBirdForTokenClassification, BigBirdModel, BigBirdTokenizer, BigBirdConfig
+from transformers import BigBirdForTokenClassification, BigBirdModel, BigBirdTokenizer, BigBirdConfig, AutoTokenizer
 from transformers import AdamW, get_linear_schedule_with_warmup
 from torch.utils.data import Dataset
 
@@ -78,6 +78,9 @@ def evaluate(model, eval_dataloader, tokenizer, predict_filename):
 			model.eval()
 			# predict labels for each token in a document
 			output_i = model(**batch["model_input"]).logits.squeeze()
+			if len(output_i.shape) == 1:
+				output_i = output_i.unsqueeze(0)
+
 			# append predictions
 			predictions.append(output_i.cpu().tolist())
 			# and labels
@@ -132,7 +135,8 @@ def evaluate(model, eval_dataloader, tokenizer, predict_filename):
 						continue
 					tmp.append(k)
 					tmp_y.append(j)
-			except:
+			except Exception as e:
+				print ("exception", str(e))
 				print (input_id, y_true, y_pred)
 
 	sentence_y, sentence_pred = [], [] # compute sentence level pr/rc/f1 -- this is not necessarily the same as in the FEVER Score which has some peculiarities
@@ -209,7 +213,7 @@ if __name__ == "__main__":
 	config.num_labels = 1
 	model = SentenceSelectionModel(args.model_name, config, device).to(device)
 
-	tokenizer = BigBirdTokenizer.from_pretrained(args.model_name)
+	tokenizer = AutoTokenizer.from_pretrained(args.model_name)
 
 	if args.do_train:
 		print ("training")
